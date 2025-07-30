@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create account - EHLDP</title>
+    <link rel="icon" type="image/svg+xml" href="/media/j.png">
+    <link rel="stylesheet" href="{% static 'style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+
+    <style>
+        #id_country{
+            width: fit-content;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .toggle-password{
+            cursor: pointer;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        div#form{
+            display: grid;
+        }
+        input{
+            cursor: pointer;
+        }
+    
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark px-4">
+        <div>
+            <a href="{% url 'login' %}" class="btn btn-secondary me-2">Login</a>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Signup</a>
+        </div>
+    </nav>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    <div class="form-container" style="width: 100%;">
+        <h2 class="px-4 text-center form-header text-white font-bold py-2 px-4 rounded font-bold mb-4 uppercase text-black bg-gradient-to-r to-blue-500 from-blue-300  animate-gradient">Create a account on EHLDP</h2>
+
+
+
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3" id="form">
+                    <!--The fiels is whatsapp number-->
+                    {% if field.name == 'whatsapp_number' or field.name == 'country' %}
+                    {% if field.name == 'country' %}
+                    <label for="{{ field.id_for_label }}" class="form-label" >Select Your Contry and Enter Your Whatsapp number :</label>
+                    {{field}}
+                    {% else %}
+
+                    <!--End of whatsapp number field-->
+                    
+                        <input type="text" name="{{field.name}}" id="id_{{field.name}}" style="width:92%;" placeholder="Enter your whatsapp number " required>
+                    {% endif %}
+                    {% else %}
+                    {% if field.name == 'password1' or field.name == 'password2' %}
+                    <label for="{{ field.id_for_label }}" class="form-label" >{{ field.label }} :</label>
+                    <div>
+                    <input type="password" name="{{field.name}}" id="id_{{field.name}}" style="width:92%;" required>
+
+                    <code class="toggle-password" onclick="togglePassword('id_{{field.name}}')"> 👁️</code></div>
+                    {% else %}
+                    <label for="{{ field.id_for_label }}" class="form-label" >{{ field.label }} :</label>
+                    <input type="text" name="{{field.name}}" id="id_{{field.name}}" style="width:92%;" required>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="field-error">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <center>
+            <button type="submit" class="w-1 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded font-bold mb-4 uppercase text-black bg-gradient-to-r to-blue-500 from-blue-300  animate-gradient">Signup</button>
+            </center>
+        </form>
+
+        <p class="mt-4">
+            You have an account? <a href="{% url 'login' %}">Log In Now </a>
+        </p>
+    </div>
+<script>
+    function togglePassword(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+}
+    document.getElementById("id_username").placeholder = 'Student ID **'
+    document.getElementById("id_password").placeholder = 'Password **'
+    document.getElementsByTagName('label')[0].innerText = 'Student ID'
+    document.getElementsByTagName('label')[1].innerText = 'Password'
+</script>
+</body>
+<script src="{% static 'js/main.js' %}"></script>
+</html>
