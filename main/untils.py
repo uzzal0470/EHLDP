@@ -1,6 +1,5 @@
 from controler.models import WithdrawRequest
 import re
-from twilio.rest import Client
 from .models import User
 def check_withdraw_balance(user, amount):
     amount = int(amount)
