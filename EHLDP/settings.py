@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-svas8b+9n_(h=lopi8f+)5o@7%oq3ry8k8=i!%s3diix2-21_-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost' , '127.0.0.1' , 'earninghldp.onrender.com']
+ALLOWED_HOSTS = ['localhost' , '127.0.0.1' , 'earninghldp.onrender.com' , '0.0.0.0']
 AUTH_USER_MODEL = 'main.User'
 
 # Application definition
