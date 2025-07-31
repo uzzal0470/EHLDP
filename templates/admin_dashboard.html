@@ -70,13 +70,13 @@
         <table>
             <tr>
                 <th>Student ID</th>
-                <th>Whatsapp Number</th>
+                <th>Student Name</th>
                 <th>Actions</th>
             </tr>
             {% for user in react %}
             <tr>
                 <td>{{ user.username }}</td>
-                <td>{{ user.whatsapp_number }}</td>
+                <td>{{ user.get_ffull_name }}</td>
                 <td>
                     <a class="button">Approved</a>
                 </td>
