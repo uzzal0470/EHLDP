@@ -127,7 +127,7 @@ def signup_view(request):
                     why="Referral Bonus"
                 )
                 cache.delete('referred_by')
-            return redirect("home")
+            return redirect("profile")
     else:
         form = SignupForm()
 
