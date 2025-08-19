@@ -193,7 +193,7 @@ def withdraw_request_view(request):
                     return redirect('withdraw-request')
                 # 350 Taka withdraw, but deduct 300 Taka from the balance
                 amount_to_deduct = 300
-                history_amount = 50  # 50 Taka added to history
+                history_amount = amount - 300  # The remaining amount will be added to history
             else:
                 # For subsequent withdrawals, minimum 50 Taka withdraw
                 if amount < 50:
@@ -221,7 +221,7 @@ def withdraw_request_view(request):
                 bank=bank_name
             )
 
-            # Add to the history (50 Taka for the first withdrawal only)
+            # Add to the history (remaining amount for the first withdrawal only)
             if history_amount > 0:
                 History.objects.create(
                     student=user,
