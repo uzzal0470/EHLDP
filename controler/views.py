@@ -86,8 +86,8 @@ def controller_page(request):
                         messages.success(request, f"Succes to add {amount} taka on student ID {username}")
                         return redirect('balance-control')
                     elif action == "remove":
-                        if user_obj.balance >= amount:
-                            user_obj.balance = int(user_obj.balance)-int(amount)
+                        if int(user_obj.balance) >= int(amount):
+                            user_obj.balance =int(user_obj.balance) - int(amount)
                             History.objects.create(student=user_obj, balance=f"-{amount}", why=f"Succes to cut {amount} taka to student ID {username}")
                             messages.error(request, f"Succes to cut {amount} taka to student ID {username}")
                             return redirect('balance-control')
