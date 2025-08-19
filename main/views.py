@@ -183,19 +183,32 @@ def withdraw_request_view(request):
                 messages.error(request, "Insufficient Balance!")
                 return redirect('withdraw-request')
 
-            # Custom minimum balance check based on withdrawal history
-            if not check_withdraw_balance(request.user, amount):
-                if WithdrawRequest.objects.filter(user=request.user).exists():
-                    messages.error(request, "Minimum withdraw amount is 50 tk!")
-                else:
-                    messages.error(request, "Minimum withdraw amount for your first withdrawal is 350 tk! the second withdraw you can 50 tk")
-                return redirect('withdraw-request')
+            # Check if this is the user's first withdrawal
+            user_withdraw_history = WithdrawRequest.objects.filter(user=request.user)
 
-            # Deduct balance
+            # First withdrawal logic: minimum 350 Taka withdraw, 300 Taka will be deducted
+            if not user_withdraw_history.exists():
+                if amount < 350:
+                    messages.error(request, "Minimum withdrawal amount for your first withdrawal is 350 TK!")
+                    return redirect('withdraw-request')
+                # 350 Taka withdraw, but deduct 300 Taka from the balance
+                amount_to_deduct = 300
+                history_amount = 50  # 50 Taka added to history
+            else:
+                # For subsequent withdrawals, minimum 50 Taka withdraw
+                if amount < 50:
+                    messages.error(request, "Minimum withdrawal amount is 50 TK!")
+                    return redirect('withdraw-request')
+                # Deduct the full amount for subsequent withdrawals
+                amount_to_deduct = amount
+                history_amount = 0  # No bonus for subsequent withdrawals
+
+            # Update user balance after deduction
             user = request.user
-            user.balance = user_balance - amount
+            user.balance = user_balance - amount_to_deduct
             user.save()
 
+            # Create a withdrawal request
             bank_name = {
                 'bkash': 'Bkash',
                 'nagad': 'Nagad',
@@ -207,6 +220,14 @@ def withdraw_request_view(request):
                 reason='Withdraw',
                 bank=bank_name
             )
+
+            # Add to the history (50 Taka for the first withdrawal only)
+            if history_amount > 0:
+                History.objects.create(
+                    student=user,
+                    balance=f'+{history_amount}',
+                    why="First Withdrawal Bonus"
+                )
 
             messages.success(request, "Your withdrawal request has been received. It will be processed shortly.")
             return redirect("withdraw-request")
