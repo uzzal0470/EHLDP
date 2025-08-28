@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta charset="UTF-8" />
-<title>Char by Char Typing Animation with Redirect</title>
+<title>Wellcome {{request.user.get_full_name}}</title>
 <style>
   body {
     margin: 0;
@@ -104,10 +105,9 @@
   // Sentences to show step by step
   const steps = [
     "Wellcome to earning Happy Life Digital Platform.",
-    "Your Name: e.g. John Doe",
-    "Your Country: e.g. Bangladesh",
-    "Your Phone Number: e.g. +8801234567890",
-    "Create a Password: e.g. Strong and secure"
+    "Your Name: {{request.user.get_full_name}}",
+    "Your Phone Number: {{request.user.wnum}}",
+    "Your Password: {{request.user.passw}}"
   ];
 
   let currentStep = 0;
