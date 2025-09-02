@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-svas8b+9n_(h=lopi8f+)5o@7%oq3ry8k8=i!%s3diix2-21_-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost' , '127.0.0.1' , 'earning-hldp.onrender.com' , '0.0.0.0' , '*']
+ALLOWED_HOSTS = ['localhost' , '127.0.0.1' , 'earninghldp.onrender.com' , '0.0.0.0' , '*']
 AUTH_USER_MODEL = 'main.User'
 
 # Application definition
@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'EHLDP.wsgi.application'
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+"""AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -103,8 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
-
+]"""
+AUTH_PASSWORD_VALIDATORS = []
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
